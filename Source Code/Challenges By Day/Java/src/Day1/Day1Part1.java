@@ -17,17 +17,17 @@ public class Day1Part1 extends Solution {
     @Override
     public void solution() {
 
-        List<String> result = readFileToList();
+        List<String> fileContent = readFileToList();
 
-        int size = result.size();
+        int size = fileContent.size();
 
         for (int i = 0; i < size - 1; i++) {
 
-            int currentValue = Integer.parseInt(result.get(i));
+            int currentValue = Integer.parseInt(fileContent.get(i));
 
             for (int j = i + 1; j + 1 < size; j++) {
 
-                int nextValue = Integer.parseInt(result.get(j));
+                int nextValue = Integer.parseInt(fileContent.get(j));
 
                 if (currentValue + nextValue == 2020) {
 

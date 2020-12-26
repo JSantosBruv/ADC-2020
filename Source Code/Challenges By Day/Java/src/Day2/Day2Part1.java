@@ -17,11 +17,11 @@ public class Day2Part1 extends Solution {
     @Override
     public void solution() {
 
-        List<String> result = readFileToList();
+        List<String> fileContent = readFileToList();
 
         int answer = 0;
 
-        for (String value : result) {
+        for (String value : fileContent) {
 
             String[] firstSplit = value.split(": ");
 

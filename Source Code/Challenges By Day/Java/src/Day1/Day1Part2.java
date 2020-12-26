@@ -17,21 +17,21 @@ public class Day1Part2 extends Solution {
     @Override
     public void solution() {
 
-        List<String> result = readFileToList();
+        List<String> fileContent = readFileToList();
 
-        int size = result.size();
+        int size = fileContent.size();
 
         for (int i = 0; i < size - 2; i++) {
 
-            int currentValue = Integer.parseInt(result.get(i));
+            int currentValue = Integer.parseInt(fileContent.get(i));
 
             for (int j = i + 1; j + 1 < size - 1; j++) {
 
-                int nextValue = Integer.parseInt(result.get(j));
+                int nextValue = Integer.parseInt(fileContent.get(j));
 
                 for (int l = j + 1; l + 1 < size; l++) {
 
-                    int nextNextValue = Integer.parseInt(result.get(l));
+                    int nextNextValue = Integer.parseInt(fileContent.get(l));
 
                     if (currentValue + nextValue + nextNextValue == 2020) {
 
