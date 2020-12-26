@@ -8,9 +8,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
 public abstract class Solution {
 
-    public static final String FilesFolder = "../../Files/";
+    public static final String FilesFolder = "./Files/";
 
     String fileName;
 
@@ -26,7 +27,9 @@ public abstract class Solution {
 
         List<String> result;
 
-        try (Stream<String> lines = Files.lines(Paths.get(FilesFolder + fileName))) {
+        try (Stream<String> lines =
+
+                Files.lines(Paths.get(FilesFolder + fileName))) {
 
             result = lines.collect(Collectors.toList());
 

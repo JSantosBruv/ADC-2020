@@ -17,7 +17,6 @@ public class Day1Part1 extends Solution {
     @Override
     public void solution() {
 
-
         List<String> result = readFileToList();
 
         int size = result.size();
