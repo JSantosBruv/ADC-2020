@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Day3Part2 extends Solution {
 
@@ -29,52 +29,31 @@ public class Day3Part2 extends Solution {
         ExecutorService executor = Executors.newFixedThreadPool(5);
 
         List<Slope> slopes = new ArrayList<>();
-        slopes.add(new Slope(1, 1));
-        slopes.add(new Slope(3, 1));
-        slopes.add(new Slope(5, 1));
-        slopes.add(new Slope(7, 1));
-        slopes.add(new Slope(1, 2));
+        slopes.add(new Slope(1, 1, fileContent));
+        slopes.add(new Slope(3, 1, fileContent));
+        slopes.add(new Slope(5, 1, fileContent));
+        slopes.add(new Slope(7, 1, fileContent));
+        slopes.add(new Slope(1, 2, fileContent));
 
 
-        for (int i = 0; i < slopes.size(); i++) {
+        AtomicInteger answer = new AtomicInteger(1);
 
-            int finalI = i;
+        slopes.forEach(value -> {
 
             executor.submit(() -> {
 
-                int answer = 0;
+                int slopeAnswer = value.findTrees(height, width);
 
-                Slope slope = slopes.get(finalI);
-
-                int rightIndex = slope.rightIndex;
-                int downIndex = slope.downIndex;
-
-                for (; downIndex < height;
-                     downIndex += slope.downIndex, rightIndex = (rightIndex + slope.rightIndex) % width) {
-
-                    char[] line = fileContent.get(downIndex);
-
-                    if (line[rightIndex] == '#')
-                        answer++;
-                }
-
-                slope.setAnswer(answer);
+                answer.updateAndGet(x -> slopeAnswer * x);
 
             });
-        }
+        });
+
 
         executor.shutdown();
-        try {
-            executor.awaitTermination(30, TimeUnit.SECONDS);
 
-        } catch (InterruptedException e) {
-            //idk
-        }
-
-        int answer = 1;
-
-        for (Slope slope : slopes)
-            answer *= slope.answer;
+        while (!executor.isTerminated())
+            ;    //active wait
 
 
         Print.print(answer);
@@ -87,16 +66,34 @@ public class Day3Part2 extends Solution {
         private final int downIndex;
         private int answer;
 
-        public Slope(int rightIndex, int downIndex) {
+        private final List<char[]> fileContent;
+
+        public Slope(int rightIndex, int downIndex, List<char[]> fileContent) {
             this.rightIndex = rightIndex;
             this.downIndex = downIndex;
             this.answer = 0;
+
+            this.fileContent = fileContent;
         }
 
+        int findTrees(int height, int width) {
 
-        public void setAnswer(int answer) {
-            this.answer = answer;
+            int mutableDownIndex = downIndex;
+            int mutableRightIndex = rightIndex;
+
+            for (; mutableDownIndex < height;
+                 mutableDownIndex += downIndex, mutableRightIndex = (mutableRightIndex + rightIndex) % width) {
+
+                char[] line = fileContent.get(mutableDownIndex);
+
+                if (line[mutableRightIndex] == '#')
+                    answer++;
+            }
+
+
+            return answer;
         }
+
 
     }
 }
