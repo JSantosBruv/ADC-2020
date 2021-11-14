@@ -67,4 +67,27 @@ public abstract class Solution {
 
         return new ArrayList<>();
     }
+
+    public List<String> readFileToListDelimited() {
+
+        List<String> rawList = readFileToList();
+        List<String> delimitedList = new ArrayList<>();
+
+        StringBuilder newLine = new StringBuilder();
+
+        rawList.forEach(value -> {
+            if (!value.isBlank())
+                newLine.append(" " + value);
+            else {
+                delimitedList.add(newLine.toString().trim());
+                newLine.setLength(0);
+            }
+
+        });
+
+        delimitedList.add(newLine.toString().trim());
+
+        return delimitedList;
+
+    }
 }

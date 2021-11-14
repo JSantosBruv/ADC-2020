@@ -4,6 +4,8 @@ import Day2.Day2Part1;
 import Day2.Day2Part2;
 import Day3.Day3Part1;
 import Day3.Day3Part2;
+import Day4.Day4Part1;
+import Day4.Day4Part2;
 import Utils.Solution;
 
 public class RunSolution {
@@ -18,5 +20,8 @@ public class RunSolution {
 
         Solution sol3_1 = new Day3Part1("3/input1.txt");
         Solution sol3_2 = new Day3Part2("3/input1.txt");
+
+        Solution sol4_1 = new Day4Part1("4/input1.txt");
+        Solution sol4_2 = new Day4Part2("4/input1.txt");
     }
 }
